@@ -7,7 +7,7 @@ import urllib
 import os
 
 
-picUrlList = []
+picUrlSet = set()
 
 beginUrl = "http://www.aitaotu.com/tag/siwa.html"
 baseUrl = "http://www.aitaotu.com"
@@ -21,7 +21,7 @@ print groupPageNum
 
 
 # 获取全部套图首页的url
-for i in range(1, groupPageNum):
+for i in range(1, groupPageNum+1):
     if i == 1:
         html = requests.get(beginUrl)
     else:
@@ -31,14 +31,14 @@ for i in range(1, groupPageNum):
     content = html.content
     link = re.findall('<p class="ph3"><a href="(.*?)" target="_blank" title=', content, re.S)
     for each in link:
-        picUrlList.append(baseUrl + each)
+        picUrlSet.add(baseUrl + each)
 
-print picUrlList
-print(len(picUrlList))
+print picUrlSet
+print(len(picUrlSet))
 
 
 # 遍历每个套图，并下载
-for link in picUrlList:
+for link in picUrlSet:
     picHtml = requests.get(link)
     picContent = picHtml.content
     print link
@@ -56,6 +56,8 @@ for link in picUrlList:
             filename = "/Users/dreameng/Desktop/pics/" + picFileName
             if not os.path.exists(filename):
                 os.mkdir(filename)
+            else:
+                continue
             picPath = re.findall('<img src="(.*?)" alt=', picContent, re.S)
         else:
             nextUrl = link[: -5] + "_" + str(i) + ".html"
