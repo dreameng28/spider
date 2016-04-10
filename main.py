@@ -51,13 +51,15 @@ for link in picUrlSet:
     picFileName = picFileName[0]
 
     j = 1
+
+    filename = "/Users/dreameng/Desktop/pics/" + picFileName
+    if not os.path.exists(filename):
+        os.mkdir(filename)
+    else:
+        continue
+
     for i in range(1, page + 1):
         if i == 1:
-            filename = "/Users/dreameng/Desktop/pics/" + picFileName
-            if not os.path.exists(filename):
-                os.mkdir(filename)
-            else:
-                continue
             picPath = re.findall('<img src="(.*?)" alt=', picContent, re.S)
         else:
             nextUrl = link[: -5] + "_" + str(i) + ".html"
