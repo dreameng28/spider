@@ -7,6 +7,10 @@ import urllib
 import os
 from multiprocessing.managers import BaseManager
 
+"""
+研究生时的项目
+"""
+
 
 # 创建类似的QueueManager:
 class QueueManager(BaseManager):
